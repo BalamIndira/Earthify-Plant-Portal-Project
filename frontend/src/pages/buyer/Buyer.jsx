@@ -200,7 +200,7 @@ export default function Buyer() {
 
       <Details />
       <div className="pt-8 flex flex-col md:flex-row px-4 md:px-3 pb-12">
-        <aside className="md:w-45 w-full mr-5 md:h-[calc(100vh-5.5rem)] sticky top-[4rem] bg-white bg-opacity-300 backdrop-blur-md p-4 rounded-lg shadow-green-400 shadow-md z-20 mb-6 md:mb-0">
+        <aside className="md:w-45 mr-5 md:h-[calc(100vh-5.5rem)] sticky top-[4rem] bg-white bg-opacity-300 backdrop-blur-md p-4 rounded-lg shadow-green-400 shadow-md z-20 mb-6 md:mb-0">
           <h2 className="text-lg font-extrabold mb-4 text-green-800 drop-shadow-md">
             🌿 Categories
           </h2>
@@ -320,34 +320,116 @@ export default function Buyer() {
           animation: fadeIn 0.3s ease forwards;
         }
 
+        /* ===== BASE RESPONSIVE STYLES ===== */
+        * {
+          box-sizing: border-box;
+        }
+
+        body,
+        html {
+          width: 100%;
+          overflow-x: hidden;
+        }
+
         /* ===== DESKTOP STYLES (1024px and above) ===== */
         @media (min-width: 1024px) {
+          .relative.bg-gradient-to-br {
+            width: 100%;
+            padding: 0;
+            margin: 0;
+          }
+
           .pt-8 {
             padding-top: 2rem;
           }
 
+          .px-4 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+          }
+
+          .md\\:px-3 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+          }
+
+          .pb-12 {
+            padding-bottom: 3rem;
+          }
+
           aside {
             width: 180px;
+            margin-right: 1.25rem;
+            height: calc(100vh - 5.5rem);
+            padding: 1rem;
           }
 
           main {
             grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
           }
 
-          .fixed {
-            position: fixed;
+          .space-y-2 > li {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.875rem;
+          }
+
+          /* Feedback elements */
+          .fixed.bottom-6.right-6 {
+            bottom: 1.5rem;
+            right: 1.5rem;
+            width: 56px;
+            height: 56px;
+            padding: 1rem;
+          }
+
+          .fixed.bottom-24.right-6.w-64 {
+            bottom: 6rem;
+            right: 1.5rem;
+            width: 256px;
+            padding: 1.25rem;
+          }
+
+          h4 {
+            font-size: 1.125rem;
+            margin-bottom: 0.75rem;
+          }
+
+          textarea {
+            padding: 0.75rem;
+            font-size: 0.875rem;
+            min-height: 100px;
+          }
+
+          button[type="button"] {
+            padding: 0.5rem;
+            font-size: 0.875rem;
           }
         }
 
         /* ===== TABLET STYLES (768px to 1023px) ===== */
         @media (max-width: 1023px) and (min-width: 769px) {
+          .relative.bg-gradient-to-br {
+            width: 100%;
+            padding: 0;
+          }
+
           .pt-8 {
             padding-top: 1.5rem;
           }
 
-          div.px-4 {
+          .px-4 {
             padding-left: 1rem;
             padding-right: 1rem;
+          }
+
+          .pb-12 {
+            padding-bottom: 2rem;
+          }
+
+          .flex.flex-col.md\\:flex-row {
+            flex-direction: column;
+            gap: 1.5rem;
           }
 
           aside {
@@ -358,112 +440,62 @@ export default function Buyer() {
             max-height: none;
             margin-right: 0;
             margin-bottom: 1.5rem;
+            padding: 1.25rem;
+            sticky: unset;
+            z-index: 20;
           }
 
-          ul {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.5rem;
+          .md\\:w-45 {
+            width: 100% !important;
           }
 
-          li {
-            text-align: center;
-            padding: 0.6rem 0.5rem;
+          .md\\:h-\\[calc\\(100vh-5.5rem\\)\\] {
+            height: auto !important;
           }
 
-          main {
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1rem;
-          }
-        }
-
-        /* ===== MOBILE STYLES (480px to 768px) ===== */
-        @media (max-width: 768px) {
-          .relative {
-            width: 100vw;
-            margin-left: -50vw;
-            left: 50%;
-          }
-
-          .pt-8 {
-            padding-top: 1rem;
-          }
-
-          .px-4 {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
-          }
-
-          .flex.flex-col.md\\:flex-row {
-            flex-direction: column;
-            gap: 0.75rem;
-          }
-
-          aside {
-            width: 100%;
-            position: relative;
-            top: auto;
-            height: auto;
-            max-height: none;
-            margin-right: 0;
-            margin-bottom: 1rem;
-            padding: 1rem;
-            border-radius: 0.375rem;
+          .md\\:mb-0 {
+            margin-bottom: 1.5rem !important;
           }
 
           h2 {
-            font-size: 1rem;
-            margin-bottom: 0.75rem;
-            text-align: center;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+            text-align: left;
           }
 
-          ul {
+          .space-y-2 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
-            gap: 0.4rem;
-            list-style: none;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
           }
 
-          li {
-            padding: 0.5rem 0.4rem;
-            font-size: 0.75rem;
-            border-radius: 0.25rem;
+          .space-y-2 > li {
+            padding: 0.6rem 0.5rem;
             text-align: center;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            font-size: 0.875rem;
           }
 
           main {
             flex: 1;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.75rem;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
             width: 100%;
-          }
-
-          .pb-12 {
-            padding-bottom: 1.5rem;
           }
 
           /* Feedback Button */
           .fixed.bottom-6.right-6 {
-            bottom: 1rem;
-            right: 0.75rem;
-          }
-
-          button {
-            width: 48px;
-            height: 48px;
-            padding: 0.75rem;
+            bottom: 1.25rem;
+            right: 1.25rem;
+            width: 52px;
+            height: 52px;
+            padding: 0.875rem;
           }
 
           /* Feedback Form */
           .fixed.bottom-24.right-6.w-64 {
-            bottom: 4.5rem;
-            right: 0.75rem;
-            left: 0.75rem;
-            width: calc(100% - 1.5rem);
-            max-width: none;
+            bottom: 5rem;
+            right: 1rem;
+            width: 280px;
             padding: 1rem;
           }
 
@@ -474,47 +506,44 @@ export default function Buyer() {
 
           textarea {
             padding: 0.5rem;
-            font-size: 0.75rem;
-            margin-bottom: 0.5rem;
-            min-height: 80px;
-          }
-
-          .w-full.bg-green-600 {
-            padding: 0.5rem;
             font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            min-height: 85px;
           }
 
           p {
-            font-size: 0.75rem;
+            font-size: 0.8rem;
           }
         }
 
-        /* ===== SMALL PHONE STYLES (320px to 479px) ===== */
-        @media (max-width: 480px) {
-          .relative {
-            width: 100vw;
-            overflow-x: hidden;
+        /* ===== MOBILE STYLES (480px to 768px) ===== */
+        @media (max-width: 768px) {
+          .relative.bg-gradient-to-br {
+            width: 100%;
+            margin: 0;
+            padding: 0;
           }
 
           .pt-8 {
-            padding-top: 0.75rem;
+            padding-top: 1rem;
           }
 
           .px-4 {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding: 0 0.5rem;
           }
 
           .md\\:px-3 {
-            padding-left: 0.5rem;
-            padding-right: 0.5rem;
+            padding: 0 0.5rem !important;
+          }
+
+          .pb-12 {
+            padding-bottom: 1.5rem;
           }
 
           .flex.flex-col.md\\:flex-row {
-            display: flex;
             flex-direction: column;
-            gap: 0.5rem;
-            padding: 0.5rem;
+            gap: 0.75rem;
+            padding: 0 0.5rem;
           }
 
           aside {
@@ -523,22 +552,194 @@ export default function Buyer() {
             top: auto;
             height: auto;
             max-height: none;
-            sticky: none;
-            margin: 0;
-            padding: 0.75rem;
+            margin: 0 0 1rem 0;
+            padding: 1rem;
+            sticky: unset;
             border-radius: 0.375rem;
+            z-index: 20;
+          }
+
+          .md\\:w-45 {
+            width: 100% !important;
+          }
+
+          .md\\:h-\\[calc\\(100vh-5.5rem\\)\\] {
+            height: auto !important;
+          }
+
+          .md\\:mb-0 {
+            margin-bottom: 1rem !important;
+          }
+
+          h2 {
+            font-size: 1rem;
             margin-bottom: 0.75rem;
+            text-align: center;
+            font-weight: 700;
+          }
+
+          .space-y-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(65px, 1fr));
+            gap: 0.5rem;
+          }
+
+          .space-y-2 > li {
+            padding: 0.5rem 0.4rem;
+            font-size: 0.7rem;
+            text-align: center;
+            cursor: pointer;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 36px;
+          }
+
+          main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0;
+          }
+
+          /* Feedback Button */
+          .fixed.bottom-6.right-6 {
+            position: fixed;
+            bottom: 1rem;
+            right: 0.75rem;
+            z-index: 50;
+            width: 48px;
+            height: 48px;
+            padding: 0.75rem;
+          }
+
+          button {
+            width: 48px;
+            height: 48px;
+            min-height: 44px;
+            min-width: 44px;
+            padding: 0.75rem;
+          }
+
+          /* Feedback Form */
+          .fixed.bottom-24.right-6.w-64 {
+            position: fixed;
+            bottom: 4.5rem;
+            right: 0.75rem;
+            left: 0.75rem;
+            width: calc(100% - 1.5rem);
+            max-width: none;
+            padding: 1rem;
+            z-index: 50;
+          }
+
+          h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+          }
+
+          textarea {
+            padding: 0.5rem;
+            font-size: 0.75rem;
+            margin-bottom: 0.5rem;
+            min-height: 80px;
+            width: 100%;
+          }
+
+          .w-full.bg-green-600 {
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            width: 100%;
+          }
+
+          p {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+          }
+        }
+
+        /* ===== SMALL PHONE STYLES (320px to 480px) ===== */
+        @media (max-width: 480px) {
+          .relative.bg-gradient-to-br {
+            width: 100%;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
+          }
+
+          body,
+          html {
+            overflow-x: hidden;
+          }
+
+          .pt-8 {
+            padding-top: 0.75rem;
+          }
+
+          .px-4 {
+            padding: 0 0.5rem;
+          }
+
+          .md\\:px-3 {
+            padding: 0 0.5rem !important;
+          }
+
+          .pb-12 {
+            padding-bottom: 1rem;
+          }
+
+          .flex.flex-col.md\\:flex-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            padding: 0 0.5rem;
+            width: 100%;
+          }
+
+          aside {
+            width: 100%;
+            position: relative;
+            top: auto;
+            height: auto;
+            max-height: none;
+            margin: 0 0 0.75rem 0;
+            padding: 0.75rem;
+            sticky: none;
+            border-radius: 0.375rem;
             z-index: 10;
+          }
+
+          .md\\:w-45 {
+            width: 100% !important;
+          }
+
+          .md\\:h-\\[calc\\(100vh-5.5rem\\)\\] {
+            height: auto !important;
+          }
+
+          .md\\:mb-0 {
+            margin-bottom: 0 !important;
+          }
+
+          .mr-5 {
+            margin-right: 0 !important;
           }
 
           h2 {
             font-size: 0.95rem;
             margin-bottom: 0.5rem;
             text-align: center;
+            font-weight: 700;
           }
 
           .space-y-2 {
-            display: grid;
+            display: grid !important;
             grid-template-columns: repeat(2, 1fr);
             gap: 0.35rem;
           }
@@ -547,10 +748,9 @@ export default function Buyer() {
             font-size: 0.65rem;
           }
 
-          li {
+          .space-y-2 > li {
             padding: 0.4rem 0.3rem;
-            font-size: 0.65rem;
-            border-radius: 0.25rem;
+            font-size: 0.6rem;
             text-align: center;
             white-space: nowrap;
             overflow: hidden;
@@ -559,17 +759,16 @@ export default function Buyer() {
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
           }
 
           main {
             flex: 1;
+            display: grid;
             grid-template-columns: 1fr;
             gap: 0.5rem;
             width: 100%;
-          }
-
-          .pb-12 {
-            padding-bottom: 1rem;
+            padding: 0;
           }
 
           /* Feedback Button */
@@ -581,12 +780,15 @@ export default function Buyer() {
             width: 48px;
             height: 48px;
             padding: 0.5rem;
+            min-height: 44px !important;
+            min-width: 44px !important;
           }
 
-          button {
+          button[type="button"] {
             min-width: 44px;
             min-height: 44px;
             font-size: 14px;
+            padding: 0.5rem;
           }
 
           /* Feedback Form */
@@ -601,11 +803,13 @@ export default function Buyer() {
             padding: 0.75rem;
             max-height: 70vh;
             overflow-y: auto;
+            z-index: 50;
           }
 
           h4 {
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 0.4rem;
+            font-weight: 600;
           }
 
           textarea {
@@ -614,12 +818,14 @@ export default function Buyer() {
             margin-bottom: 0.4rem;
             min-height: 70px;
             width: 100%;
+            box-sizing: border-box;
           }
 
           .w-full.bg-green-600 {
             padding: 0.4rem;
             font-size: 0.75rem;
             min-height: 40px;
+            width: 100%;
           }
 
           p {
@@ -630,38 +836,64 @@ export default function Buyer() {
 
         /* ===== EXTRA SMALL PHONES (320px and below) ===== */
         @media (max-width: 320px) {
-          .space-y-2 {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 0.3rem;
+          .pt-8 {
+            padding-top: 0.5rem;
           }
 
-          li {
-            font-size: 0.6rem;
+          .px-4 {
+            padding: 0 0.3rem;
+          }
+
+          aside {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+          }
+
+          h2 {
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+          }
+
+          .space-y-2 {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.25rem;
+          }
+
+          .space-y-2 > li {
+            font-size: 0.55rem;
             padding: 0.3rem 0.2rem;
             min-height: 28px;
           }
 
           main {
             gap: 0.35rem;
+            padding: 0;
           }
 
+          /* Feedback Button */
           .fixed.bottom-6.right-6 {
             width: 44px;
             height: 44px;
+            bottom: 0.5rem;
+            right: 0.4rem;
           }
 
+          /* Feedback Form */
           .fixed.bottom-24.right-6.w-64 {
             bottom: 3rem;
             padding: 0.5rem;
+            border-radius: 0.75rem 0.75rem 0 0;
           }
 
           h4 {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
           }
 
           textarea {
             font-size: 0.65rem;
             min-height: 60px;
+            padding: 0.4rem;
           }
         }
       `}</style>
