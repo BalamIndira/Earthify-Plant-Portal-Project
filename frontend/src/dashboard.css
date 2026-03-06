@@ -1,0 +1,288 @@
+/* ===== DASHBOARD / ADMIN / TABLES RESPONSIVE CSS ===== */
+
+@media (max-width: 768px) {
+  /* Dashboard grid layouts */
+  .dashboard-grid,
+  .admin-grid,
+  div[style*="display: grid"] {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+
+  /* Dashboard cards */
+  .dashboard-card,
+  .stat-card,
+  .card {
+    padding: 1.5rem 1rem !important;
+    min-width: unset !important;
+  }
+
+  /* Table adjustments for tablet */
+  table {
+    font-size: 0.9rem !important;
+  }
+
+  th,
+  td {
+    padding: 0.75rem !important;
+  }
+
+  /* Buttons in forms and tables */
+  .btn,
+  button,
+  input[type="button"],
+  input[type="submit"] {
+    width: auto !important;
+    padding: 10px 16px !important;
+  }
+
+  /* Flex containers - stack on tablet */
+  .flex-container,
+  div[style*="display: flex"][style*="gap"] {
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .flex-container > * {
+    width: 100% !important;
+    flex: 1 !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Single column on mobile */
+  .dashboard-grid,
+  .admin-grid,
+  div[style*="display: grid"],
+  .grid-cols-2,
+  .grid-cols-3,
+  .grid-cols-4 {
+    grid-template-columns: 1fr !important;
+    gap: 1rem !important;
+  }
+
+  /* Dashboard card spacing on mobile */
+  .dashboard-card,
+  .stat-card,
+  .card {
+    padding: 1rem 0.75rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Table responsive for mobile */
+  table {
+    width: 100% !important;
+    display: block !important;
+    border-collapse: collapse !important;
+    overflow-x: auto !important;
+  }
+
+  thead {
+    display: none !important;
+  }
+
+  tbody {
+    display: block !important;
+  }
+
+  tr {
+    display: block !important;
+    border: 1px solid #ddd !important;
+    margin-bottom: 1rem !important;
+    border-radius: 6px !important;
+  }
+
+  td {
+    display: block !important;
+    text-align: right !important;
+    padding: 0.75rem !important;
+    position: relative !important;
+    padding-left: 50% !important;
+  }
+
+  td:before {
+    content: attr(data-label) !important;
+    position: absolute !important;
+    left: 0.75rem !important;
+    font-weight: bold !important;
+    text-align: left !important;
+  }
+
+  /* Action buttons in tables */
+  .btn-group,
+  .action-buttons {
+    display: flex !important;
+    gap: 0.5rem !important;
+    flex-wrap: wrap !important;
+  }
+
+  .btn-group .btn {
+    flex: 1 !important;
+    padding: 8px 10px !important;
+    font-size: 0.85rem !important;
+    min-width: 0 !important;
+  }
+
+  /* Headings in dashboard */
+  h1,
+  h2,
+  h3 {
+    word-break: break-word !important;
+    width: 100% !important;
+  }
+
+  /* Overflow for long text */
+  td,
+  th {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    word-break: break-word !important;
+  }
+
+  /* Stats row on mobile */
+  .stats-row,
+  .stats-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 1rem !important;
+  }
+
+  .stat-item {
+    width: 100% !important;
+  }
+
+  /* Flex containers stack on mobile */
+  .flex-container,
+  div[style*="display: flex"][style*="gap"],
+  .flex-row {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    width: 100% !important;
+  }
+
+  .flex-container > *,
+  .flex-row > * {
+    width: 100% !important;
+    flex: 1 !important;
+  }
+}
+
+/* ===== SELLER DASHBOARD SPECIFIC ===== */
+@media (max-width: 480px) {
+  /* Product list cards */
+  .product-card,
+  .product-item {
+    width: 100% !important;
+    padding: 1rem 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Product image responsive */
+  .product-card img,
+  .product-item img {
+    max-width: 100px !important;
+    height: auto !important;
+  }
+
+  /* Order items on mobile */
+  .order-card,
+  .order-item {
+    padding: 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Analytics on seller dashboard */
+  .analytics-section {
+    width: 100% !important;
+    overflow-x: auto !important;
+  }
+
+  /* Message list on mobile */
+  .message-list,
+  .messages {
+    max-height: 400px !important;
+    overflow-y: auto !important;
+  }
+
+  .message-item {
+    padding: 0.75rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+}
+
+/* ===== BUYER PAGES SPECIFIC ===== */
+@media (max-width: 480px) {
+  /* Wishlist cards */
+  .wishlist-item,
+  .wishlist-card {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    padding: 0.75rem !important;
+  }
+
+  .wishlist-item img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 200px !important;
+  }
+
+  /* Buyer history */
+  .history-item,
+  .order-history {
+    width: 100% !important;
+    padding: 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Buyer feedback form */
+  .feedback-form,
+  .review-form {
+    width: 100% !important;
+  }
+
+  .feedback-form input,
+  .feedback-form textarea,
+  .review-form input,
+  .review-form textarea {
+    width: 100% !important;
+  }
+}
+
+/* ===== DELIVERY PAGES SPECIFIC ===== */
+@media (max-width: 480px) {
+  /* Delivery status card */
+  .delivery-status,
+  .status-card {
+    padding: 1rem 0.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Tracker map container */
+  .map-container,
+  .tracker-map {
+    width: 100% !important;
+    height: 300px !important;
+  }
+
+  /* Delivery form fields */
+  .delivery-form input,
+  .delivery-form textarea,
+  .delivery-form select {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Delivery summary */
+  .delivery-summary {
+    width: 100% !important;
+    padding: 0.75rem !important;
+  }
+
+  .summary-item {
+    display: flex !important;
+    justify-content: space-between !important;
+    padding: 0.5rem 0 !important;
+    border-bottom: 1px solid #eee !important;
+  }
+}

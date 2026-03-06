@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import "./responsive.css"; // Import responsive CSS for mobile/tablet support
+import "./middlebar.css"; // Import Middlebar responsive styles
+import "./dashboard.css"; // Import Dashboard/Admin responsive styles
 
 import Home from "./pages/Home";
 import Delivery from "./pages/delivery/Delivery";
@@ -144,7 +147,7 @@ export default function App() {
                   <Route path="/billing" element={<Billing />} />
                   <Route path="/cart" element={<Cart />} />
                   <Route path="/wishlist" element={<Wishlist />} />
-                  <Route path="/Buyerhistory" element={<Buyerhistory/>} />
+                  <Route path="/Buyerhistory" element={<Buyerhistory />} />
                   <Route path="/details" element={<Details />} />
                   {/* Delivery Routes */}
                   <Route path="/delivery" element={<Delivery />} />
