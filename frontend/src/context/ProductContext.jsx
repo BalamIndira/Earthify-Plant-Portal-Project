@@ -4,9 +4,9 @@ import axios from "axios";
 
 export const ProductContext = createContext();
 
-// Use VITE_API_URL only when explicitly provided. If not provided, do not attempt network calls.
+// Use VITE_BACKEND_HOST_URL for API calls
 const API = import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000";
-const API_ORIGIN = API ? API.replace(/\/api\/?$/, "") : window.location.origin;
+const API_ORIGIN = API;
 
 // configure axios only when API is set
 if (API) {

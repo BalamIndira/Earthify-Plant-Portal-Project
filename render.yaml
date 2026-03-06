@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: earthify-backend
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 4000
+      - key: MONGO_URI
+        value: mongodb+srv://balamindu2002_db_user:plant-2025@cluster1.9c6q7p9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster1
+      - key: JWT_SECRET
+        value: your_super_secret_jwt_key_here_please_change_this
+      - key: RAZORPAY_KEY_ID
+        value: rzp_test_RIdXio8j0F4v7b
+      - key: RAZORPAY_KEY_SECRET
+        value: your_razorpay_secret_key_here

@@ -6,10 +6,9 @@ import { ProductContext } from "../../context/ProductContext";
 
 const API = import.meta.env.VITE_BACKEND_HOST_URL
   ? `${import.meta.env.VITE_BACKEND_HOST_URL}/api`
-  : `http://localhost:${import.meta.env.VITE_API_PORT || 4000}/api`;
+  : "http://localhost:4000/api";
 const API_ORIGIN =
-  import.meta.env.VITE_BACKEND_HOST_URL ||
-  `http://localhost:${import.meta.env.VITE_API_PORT || 4000}`;
+  import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000";
 
 const PLACEHOLDER = "https://via.placeholder.com/80";
 
