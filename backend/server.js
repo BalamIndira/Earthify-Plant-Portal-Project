@@ -43,28 +43,28 @@ let feedbackRoutes, historyRoutes, cartRoutes, paymentRoutes, orderRoutes;
 (async () => {
   feedbackRoutes = await loadRoute(
     "./routes/feedbackRoutes.js",
-    "Feedback route not implemented"
+    "Feedback route not implemented",
   );
 
   historyRoutes = await loadRoute(
     "./routes/historyRoutes.js",
-    "History route not implemented"
+    "History route not implemented",
   );
 
   cartRoutes = await loadRoute(
     "./routes/cartRoutes.js",
-    "Cart route not implemented"
+    "Cart route not implemented",
   );
 
   paymentRoutes = await loadRoute(
     "./routes/paymentRoutes.js",
-    "Payment route not implemented"
+    "Payment route not implemented",
   );
 
   // ⭐ NEW → Delivery / Orders Route (Required for delivery dashboard)
   orderRoutes = await loadRoute(
     "./routes/orderRoutes.js",
-    "Order route not implemented"
+    "Order route not implemented",
   );
 
   // Register all routes
@@ -79,33 +79,60 @@ let feedbackRoutes, historyRoutes, cartRoutes, paymentRoutes, orderRoutes;
   app.use("/api/cart", cartRoutes);
   app.use("/api/wishlist", wishlistRoutes);
 
-  // ⭐ NEW: Delivery / Order Management
-  app.use("/api/orders", orderRoutes);
-
   // MongoDB connect
-  const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/earthify_db";
-  mongoose
-    .connect(MONGO, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      maxPoolSize: 10,
-    })
-    .then(() => {
-      console.log("✅ MongoDB connected successfully");
-      console.log(`Connected to: ${MONGO.split("@")[1]?.split("?")[0] || "local db"}`);
-    })
-    .catch((e) => {
-      console.error("❌ MongoDB connection error:", e.message);
-      console.log("⚠️  Retrying connection in 5 seconds...");
-      setTimeout(() => {
-        mongoose.connect(MONGO, {
-          useNewUrlParser: true,
-          useUnifiedTopology: true,
-        }).catch(err => console.error("❌ Retry failed:", err.message));
-      }, 5000);
-    });
+  const MONGO = process.env.MONGO_URI;
+  const MONGO_LOCAL = "mongodb://127.0.0.1:27017/earthify_db";
+
+  let dbConnected = false;
+
+  // Try to connect to MongoDB Atlas first
+  if (MONGO) {
+    console.log("🔄 Attempting to connect to MongoDB Atlas...");
+    mongoose
+      .connect(MONGO, {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        maxPoolSize: 10,
+        connectTimeoutMS: 10000,
+        retryWrites: true,
+        w: "majority",
+      })
+      .then(() => {
+        dbConnected = true;
+        console.log("✅ MongoDB Atlas connected successfully");
+      })
+      .catch((e) => {
+        console.error("❌ MongoDB Atlas connection failed:", e.message);
+        console.log("⚠️  Falling back to local MongoDB...");
+        // Try local MongoDB
+        connectLocalMongo();
+      });
+  } else {
+    console.log("⚠️  No MongoDB Atlas URI provided, using local MongoDB...");
+    connectLocalMongo();
+  }
+
+  // Function to connect to local MongoDB
+  function connectLocalMongo() {
+    mongoose
+      .connect(MONGO_LOCAL, {
+        serverSelectionTimeoutMS: 5000,
+        socketTimeoutMS: 45000,
+        maxPoolSize: 10,
+      })
+      .then(() => {
+        dbConnected = true;
+        console.log("✅ Local MongoDB connected successfully");
+        console.log("🔔 Using local database: earthify_db");
+      })
+      .catch((err) => {
+        console.error("❌ Local MongoDB connection failed:", err.message);
+        console.log(
+          "📝 Please ensure MongoDB is installed and running locally",
+        );
+        console.log("📝 Or configure MONGO_URI environment variable");
+      });
+  }
 
   // Health check
   app.get("/", (req, res) => res.send("🌱 Plant Store Backend Running..."));
@@ -113,7 +140,7 @@ let feedbackRoutes, historyRoutes, cartRoutes, paymentRoutes, orderRoutes;
   // Start server
   const PORT = process.env.PORT || 4000;
   const server = app.listen(PORT, () =>
-    console.log(`🚀 Server running on http://localhost:${PORT}`)
+    console.log(`🚀 Server running on http://localhost:${PORT}`),
   );
 
   // Global error handling

@@ -3,9 +3,11 @@
 ## ✅ Problem Found & Solution
 
 ### The Issue:
+
 **Backend cannot connect to MongoDB** because of DNS resolution error
 
 ### The Solution:
+
 Update your MongoDB connection with proper error handling
 
 ---
@@ -59,8 +61,8 @@ Replace it with:
 // MongoDB connect with retry logic
 const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/earthify_db";
 mongoose
-  .connect(MONGO, { 
-    useNewUrlParser: true, 
+  .connect(MONGO, {
+    useNewUrlParser: true,
     useUnifiedTopology: true,
     serverSelectionTimeoutMS: 5000,
     socketTimeoutMS: 45000,
@@ -70,9 +72,9 @@ mongoose
     console.error("❌ MongoDB connection error:", e.message);
     console.log("Retrying in 5 seconds...");
     setTimeout(() => {
-      mongoose.connect(MONGO, { 
-        useNewUrlParser: true, 
-        useUnifiedTopology: true 
+      mongoose.connect(MONGO, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
       });
     }, 5000);
   });
@@ -85,17 +87,15 @@ mongoose
 Find the mongoose.connect settings and update to remove deprecated options. Find this near line 90:
 
 ```javascript
-mongoose
-  .connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true });
 ```
 
 Replace with:
 
 ```javascript
-mongoose
-  .connect(MONGO, {
-    serverSelectionTimeoutMS: 5000,
-  })
+mongoose.connect(MONGO, {
+  serverSelectionTimeoutMS: 5000,
+});
 ```
 
 ---
@@ -103,11 +103,13 @@ mongoose
 ### Step 4: Verify All Frontend URLs
 
 Check `frontend/.env`:
+
 ```env
 VITE_BACKEND_HOST_URL=http://localhost:4000
 VITE_RAZORPAY_KEY_ID=rzp_test_RIdXio8j0F4v7b
 VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
 ```
+
 ✅ This is CORRECT
 
 ---
@@ -115,11 +117,13 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
 ### Step 5: Check Production Environment
 
 Verify `frontend/.env.production`:
+
 ```env
 VITE_BACKEND_HOST_URL=https://earthify-backend.onrender.com
 VITE_RAZORPAY_KEY_ID=rzp_test_RIdXio8j0F4v7b
 VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
 ```
+
 ✅ This is CORRECT
 
 ---
@@ -133,6 +137,7 @@ VITE_GOOGLE_CLIENT_ID=your_google_client_id_here
    - Install it
 
 2. **Update backend/.env:**
+
 ```env
 MONGO_URI=mongodb://127.0.0.1:27017/earthify_db
 ```
@@ -142,6 +147,7 @@ MONGO_URI=mongodb://127.0.0.1:27017/earthify_db
    - Check if it's running: Open `localhost:27017` in browser (should show connection)
 
 4. **Restart backend:**
+
 ```bash
 npm run dev
 ```
@@ -168,6 +174,7 @@ npm run dev
 ## ✅ All URLs Are Correctly Set As:
 
 ### Local Development:
+
 ```
 Backend Runs On:     http://localhost:4000
 Frontend Runs On:    http://localhost:5173 or http://localhost:5174
@@ -178,6 +185,7 @@ Database:            mongodb://127.0.0.1:27017/earthify_db (local)
 ```
 
 ### Production (After Deployment):
+
 ```
 Backend Deployed:    https://earthify-backend.onrender.com (Render)
 Frontend Deployed:   https://your-site.netlify.app (Netlify)
