@@ -6,18 +6,19 @@ import { AuthProvider } from "./context/AuthContext";
 import { ProductProvider } from "./context/ProductContext";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const GOOGLE_CLIENT_ID = "YOUR_GOOGLE_CLIENT_ID";
+const GOOGLE_CLIENT_ID =
+  import.meta.env.VITE_GOOGLE_CLIENT_ID || "demo-client-id";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-    <ProductProvider>
-      <AuthProvider>
-        <GoogleOAuthProvider>
-        <App />
-        </GoogleOAuthProvider>
-      </AuthProvider>
+      <ProductProvider>
+        <AuthProvider>
+          <GoogleOAuthProvider>
+            <App />
+          </GoogleOAuthProvider>
+        </AuthProvider>
       </ProductProvider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

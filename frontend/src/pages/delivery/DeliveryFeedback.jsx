@@ -10,7 +10,9 @@ export default function DeliveryFeedback() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/messages")
+      .get(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/messages`,
+      )
       .then((res) => setMessages(res.data))
       .catch((err) => console.error("Fetch messages error:", err));
   }, []);
@@ -20,13 +22,16 @@ export default function DeliveryFeedback() {
     if (!text.trim()) return alert("Please enter feedback text.");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/messages", {
-        senderId: deliveryId,
-        receiverId: adminId,
-        text,
-        type: "delivery",
-        status: "pending",
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/messages`,
+        {
+          senderId: deliveryId,
+          receiverId: adminId,
+          text,
+          type: "delivery",
+          status: "pending",
+        },
+      );
       setMessages([res.data, ...messages]);
       setText("");
     } catch (err) {
@@ -59,7 +64,9 @@ export default function DeliveryFeedback() {
               >
                 🚀 Send Feedback
               </button>
-              <span className="text-sm text-gray-700">Messages: {messages.length}</span>
+              <span className="text-sm text-gray-700">
+                Messages: {messages.length}
+              </span>
             </div>
           </form>
 
@@ -70,7 +77,9 @@ export default function DeliveryFeedback() {
             ) : (
               messages.map((m, i) => (
                 <div key={m._id || i} className="mb-2 last:mb-0">
-                  <p className="text-sm font-semibold text-amber-800">{m.senderId}</p>
+                  <p className="text-sm font-semibold text-amber-800">
+                    {m.senderId}
+                  </p>
                   <p className="text-sm text-gray-700">{m.text}</p>
                 </div>
               ))

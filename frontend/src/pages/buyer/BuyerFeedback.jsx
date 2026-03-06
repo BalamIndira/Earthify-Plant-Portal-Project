@@ -11,7 +11,9 @@ export default function BuyerFeedback() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/messages")
+      .get(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/messages`,
+      )
       .then((res) => setMessages(res.data))
       .catch((err) => console.error("Fetch messages error:", err));
   }, []);
@@ -21,13 +23,16 @@ export default function BuyerFeedback() {
     if (!text.trim()) return alert("Please enter feedback text.");
 
     try {
-      const res = await axios.post("http://localhost:5000/api/messages", {
-        senderId: buyerId,
-        receiverId: adminId,
-        text,
-        type: "buyer", // ✅ must include this
-        status: "pending",
-      });
+      const res = await axios.post(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/messages`,
+        {
+          senderId: buyerId,
+          receiverId: adminId,
+          text,
+          type: "buyer", // ✅ must include this
+          status: "pending",
+        },
+      );
       setMessages([res.data, ...messages]);
       setText("");
     } catch (err) {

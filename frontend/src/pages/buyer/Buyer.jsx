@@ -37,7 +37,7 @@ export default function Buyer() {
       const cat = prod.category || "Uncategorized";
       if (!updated[cat]) updated[cat] = [];
       const existingIndex = updated[cat].findIndex(
-        (p) => p.name.toLowerCase() === prod.name.toLowerCase()
+        (p) => p.name.toLowerCase() === prod.name.toLowerCase(),
       );
       if (existingIndex !== -1)
         updated[cat][existingIndex] = {
@@ -72,7 +72,7 @@ export default function Buyer() {
   const handleCartChange = async (product, type) => {
     const pid = product._id || product.id;
     const existingItem = cartItems.find(
-      (item) => (item.productId || item._id || item.id) === pid
+      (item) => (item.productId || item._id || item.id) === pid,
     );
     const qty = existingItem ? existingItem.qty : 0;
 
@@ -108,7 +108,7 @@ export default function Buyer() {
   const handleWishlistToggle = async (product) => {
     const pid = product._id || product.id;
     const exists = wishlist.find(
-      (item) => (item._id || item.id || item.productId) === pid
+      (item) => (item._id || item.id || item.productId) === pid,
     );
 
     if (exists) {
@@ -122,7 +122,7 @@ export default function Buyer() {
         console.warn("removeFromWishlistApi failed", err);
       }
       const updated = wishlist.filter(
-        (item) => (item._id || item.id || item.productId) !== pid
+        (item) => (item._id || item.id || item.productId) !== pid,
       );
       setWishlist(updated);
       localStorage.setItem("wishlistItems", JSON.stringify(updated));
@@ -161,11 +161,17 @@ export default function Buyer() {
   const sendFeedback = async () => {
     if (!feedback) return;
     try {
-      await fetch("http://localhost:5000/api/admin/feedback", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ feedback, timestamp: new Date().toISOString() }),
-      });
+      await fetch(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/admin/feedback`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            feedback,
+            timestamp: new Date().toISOString(),
+          }),
+        },
+      );
       setStatus("✅ Feedback sent!");
       setFeedback("");
       setTimeout(() => setStatus(""), 3000);
@@ -234,10 +240,10 @@ export default function Buyer() {
             filteredProducts.map((product) => {
               const pid = product._id || product.id;
               const cartItem = cartItems.find(
-                (item) => (item._id || item.id) === pid
+                (item) => (item._id || item.id) === pid,
               );
               const isWishlisted = wishlist.some(
-                (item) => (item._id || item.id) === pid
+                (item) => (item._id || item.id) === pid,
               );
 
               return (

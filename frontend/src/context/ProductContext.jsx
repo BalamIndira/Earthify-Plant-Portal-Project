@@ -5,7 +5,7 @@ import axios from "axios";
 export const ProductContext = createContext();
 
 // Use VITE_API_URL only when explicitly provided. If not provided, do not attempt network calls.
-const API = import.meta.env.VITE_API_URL || null;
+const API = import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000";
 const API_ORIGIN = API ? API.replace(/\/api\/?$/, "") : window.location.origin;
 
 // configure axios only when API is set
@@ -75,7 +75,7 @@ export const ProductProvider = ({ children }) => {
       if (!API) {
         try {
           const local = JSON.parse(
-            localStorage.getItem("wishlistItems") || "[]"
+            localStorage.getItem("wishlistItems") || "[]",
           );
           setWishlist(Array.isArray(local) ? local : []);
           return Array.isArray(local) ? local : [];
@@ -108,7 +108,7 @@ export const ProductProvider = ({ children }) => {
         } catch (err3) {
           try {
             const local = JSON.parse(
-              localStorage.getItem("wishlistItems") || "[]"
+              localStorage.getItem("wishlistItems") || "[]",
             );
             setWishlist(Array.isArray(local) ? local : []);
             return Array.isArray(local) ? local : [];
@@ -127,7 +127,7 @@ export const ProductProvider = ({ children }) => {
         axios.post("/wishlist", {
           userId: demoUserId,
           product: productSnapshot,
-        })
+        }),
       );
       const data = Array.isArray(res.data) ? res.data : res.data?.items || [];
       setWishlist(data);
@@ -153,7 +153,7 @@ export const ProductProvider = ({ children }) => {
       const res = await tryRequest(() =>
         axios.delete(`/wishlist/${wishlistItemId}`, {
           params: { userId: demoUserId },
-        })
+        }),
       );
       const data = Array.isArray(res.data) ? res.data : res.data?.items || [];
       setWishlist(data);
@@ -163,7 +163,7 @@ export const ProductProvider = ({ children }) => {
       return data;
     } catch {
       const current = (wishlist || []).filter(
-        (it) => (it._id || it.productId || it.id) !== wishlistItemId
+        (it) => (it._id || it.productId || it.id) !== wishlistItemId,
       );
       setWishlist(current);
       try {
@@ -203,7 +203,7 @@ export const ProductProvider = ({ children }) => {
   const addToCartApi = async (
     productId,
     change = 1,
-    productSnapshot = null
+    productSnapshot = null,
   ) => {
     try {
       const body = {
@@ -214,7 +214,7 @@ export const ProductProvider = ({ children }) => {
         image: productSnapshot?.images?.[0] ?? productSnapshot?.image,
       };
       const res = await tryRequest(() =>
-        axios.post(`/cart/${demoUserId}`, body)
+        axios.post(`/cart/${demoUserId}`, body),
       );
       const updated = res.data || { items: [] };
       updated.items = Array.isArray(updated.items) ? updated.items : [];
@@ -240,7 +240,7 @@ export const ProductProvider = ({ children }) => {
       } else if (idx !== -1) {
         current.items[idx].qty = Math.max(
           0,
-          (current.items[idx].qty || 0) + change
+          (current.items[idx].qty || 0) + change,
         );
         if (current.items[idx].qty === 0) current.items.splice(idx, 1);
       }
@@ -255,7 +255,7 @@ export const ProductProvider = ({ children }) => {
   const removeFromCartApi = async (productId) => {
     try {
       const res = await tryRequest(() =>
-        axios.delete(`/cart/${demoUserId}/${productId}`)
+        axios.delete(`/cart/${demoUserId}/${productId}`),
       );
       const updated = res.data || { items: [] };
       updated.items = Array.isArray(updated.items) ? updated.items : [];

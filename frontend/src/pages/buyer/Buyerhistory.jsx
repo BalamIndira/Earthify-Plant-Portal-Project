@@ -4,10 +4,12 @@ import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import { ProductContext } from "../../context/ProductContext";
 
-const API =
-  import.meta.env.VITE_API_URL ||
-  `http://localhost:${import.meta.env.VITE_API_PORT || 4000}/api`;
-const API_ORIGIN = API.replace(/\/api\/?$/, "");
+const API = import.meta.env.VITE_BACKEND_HOST_URL
+  ? `${import.meta.env.VITE_BACKEND_HOST_URL}/api`
+  : `http://localhost:${import.meta.env.VITE_API_PORT || 4000}/api`;
+const API_ORIGIN =
+  import.meta.env.VITE_BACKEND_HOST_URL ||
+  `http://localhost:${import.meta.env.VITE_API_PORT || 4000}`;
 
 const PLACEHOLDER = "https://via.placeholder.com/80";
 
@@ -24,7 +26,7 @@ export default function UserHistory() {
   useEffect(() => {
     if (Array.isArray(ctxProducts) && ctxProducts.length > 0) {
       setProductsMap(
-        Object.fromEntries(ctxProducts.map((p) => [p._id || p.id, p]))
+        Object.fromEntries(ctxProducts.map((p) => [p._id || p.id, p])),
       );
       return;
     }
@@ -32,7 +34,7 @@ export default function UserHistory() {
       const saved = JSON.parse(localStorage.getItem("products") || "[]");
       if (Array.isArray(saved) && saved.length > 0) {
         setProductsMap(
-          Object.fromEntries(saved.map((p) => [p._id || p.id, p]))
+          Object.fromEntries(saved.map((p) => [p._id || p.id, p])),
         );
         return;
       }
@@ -136,18 +138,14 @@ export default function UserHistory() {
             const pid = item.productId || item._id || item.id;
             const product = productsMap[pid] || {};
             const price = Number(
-              item.price ||
-                item.amount ||
-                product.price ||
-                product.amount ||
-                0
+              item.price || item.amount || product.price || product.amount || 0,
             );
             const qty = Number(item.qty || item.quantity || 1);
             return acc + price * qty;
           }, 0);
 
           const date = new Date(
-            order.orderDate || order.createdAt
+            order.orderDate || order.createdAt,
           ).toLocaleDateString();
 
           return (
@@ -179,7 +177,7 @@ export default function UserHistory() {
                     item.amount ||
                     product.price ||
                     product.amount ||
-                    0
+                    0,
                 );
                 const qty = Number(item.qty || item.quantity || 1);
                 const image = resolveImage(item, product);

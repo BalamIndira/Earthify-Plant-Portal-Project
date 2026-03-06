@@ -13,10 +13,12 @@ export default function History() {
       setLoading(true);
       setError("");
       try {
-        const res = await axios.get("http://localhost:5000/api/products/history");
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/products/history`,
+        );
         if (Array.isArray(res.data)) {
           const sorted = res.data.sort(
-            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
           );
           setProducts(sorted);
         } else {
@@ -52,31 +54,38 @@ export default function History() {
                 ? tab === "approved"
                   ? "bg-green-500 text-white shadow-lg"
                   : tab === "pending"
-                  ? "bg-yellow-400 text-white shadow-lg"
-                  : "bg-gray-700 text-white shadow-lg"
+                    ? "bg-yellow-400 text-white shadow-lg"
+                    : "bg-gray-700 text-white shadow-lg"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
             {tab === "approved"
               ? "✅ Approved"
               : tab === "pending"
-              ? "⏳ Pending"
-              : "🗑️ Deleted"}
+                ? "⏳ Pending"
+                : "🗑️ Deleted"}
           </button>
         ))}
       </div>
 
       {/* Loading / Error / Empty */}
       {loading ? (
-        <p className="text-center text-gray-500 animate-pulse mt-10">⏳ Loading product history...</p>
+        <p className="text-center text-gray-500 animate-pulse mt-10">
+          ⏳ Loading product history...
+        </p>
       ) : error ? (
         <p className="text-center text-red-500 mt-10">{error}</p>
       ) : filtered.length === 0 ? (
-        <p className="text-center text-gray-500 mt-10">No {activeTab} products found.</p>
+        <p className="text-center text-gray-500 mt-10">
+          No {activeTab} products found.
+        </p>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {filtered.map((p) => (
-            <div key={p._id} className={`rounded-2xl shadow-md hover:shadow-xl p-5 flex flex-col ${p.status === "deleted" ? "bg-gray-100" : "bg-white"}`}>
+            <div
+              key={p._id}
+              className={`rounded-2xl shadow-md hover:shadow-xl p-5 flex flex-col ${p.status === "deleted" ? "bg-gray-100" : "bg-white"}`}
+            >
               {/* Image */}
               <img
                 src={p.images?.[0] || placeholderImg}
@@ -85,9 +94,15 @@ export default function History() {
               />
 
               {/* Info */}
-              <h3 className="text-lg sm:text-xl font-bold text-green-800 mb-1 truncate">{p.name}</h3>
-              <p className="text-sm text-gray-700 mb-1">Category: {p.category}</p>
-              <p className="text-sm text-gray-700 mb-1">Quantity: {p.quantity}</p>
+              <h3 className="text-lg sm:text-xl font-bold text-green-800 mb-1 truncate">
+                {p.name}
+              </h3>
+              <p className="text-sm text-gray-700 mb-1">
+                Category: {p.category}
+              </p>
+              <p className="text-sm text-gray-700 mb-1">
+                Quantity: {p.quantity}
+              </p>
               <p className="text-sm text-gray-700 mb-2">Price: ₹{p.amount}</p>
 
               {/* Care */}
@@ -101,12 +116,22 @@ export default function History() {
               )}
 
               <p className="text-sm font-bold mt-auto">
-                Status: <span className={`${
-                  p.status === "approved" ? "text-green-700" :
-                  p.status === "pending" ? "text-yellow-600" : "text-gray-600"
-                }`}>{p.status.toUpperCase()}</span>
+                Status:{" "}
+                <span
+                  className={`${
+                    p.status === "approved"
+                      ? "text-green-700"
+                      : p.status === "pending"
+                        ? "text-yellow-600"
+                        : "text-gray-600"
+                  }`}
+                >
+                  {p.status.toUpperCase()}
+                </span>
               </p>
-              <p className="text-xs text-gray-500 mt-1">Updated: {new Date(p.updatedAt).toLocaleString("en-IN")}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                Updated: {new Date(p.updatedAt).toLocaleString("en-IN")}
+              </p>
             </div>
           ))}
         </div>

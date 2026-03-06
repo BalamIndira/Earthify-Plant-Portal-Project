@@ -15,11 +15,13 @@ export default function History() {
       setLoading(true);
       setError("");
       try {
-        const res = await axios.get("http://localhost:5000/api/products/history");
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/products/history`,
+        );
 
         if (Array.isArray(res.data)) {
           const sorted = res.data.sort(
-            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt)
+            (a, b) => new Date(b.updatedAt) - new Date(a.updatedAt),
           );
           setProducts(sorted);
         } else {
@@ -39,12 +41,14 @@ export default function History() {
   // ✅ Delete product (mark deleted + store in history)
   const handleDelete = async (productId) => {
     try {
-      await axios.put(`http://localhost:5000/api/products/delete/${productId}`);
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/products/delete/${productId}`,
+      );
 
       setProducts((prev) =>
         prev.map((p) =>
-          p._id === productId ? { ...p, status: "deleted" } : p
-        )
+          p._id === productId ? { ...p, status: "deleted" } : p,
+        ),
       );
     } catch (err) {
       console.error("Failed to delete product:", err);
@@ -72,16 +76,16 @@ export default function History() {
                 ? tab === "approved"
                   ? "bg-green-500 text-white shadow-lg"
                   : tab === "pending"
-                  ? "bg-yellow-400 text-white shadow-lg"
-                  : "bg-gray-700 text-white shadow-lg"
+                    ? "bg-yellow-400 text-white shadow-lg"
+                    : "bg-gray-700 text-white shadow-lg"
                 : "bg-gray-200 text-gray-700 hover:bg-gray-300"
             }`}
           >
             {tab === "approved"
               ? "✅ Approved"
               : tab === "pending"
-              ? "⏳ Pending"
-              : "🗑️ Deleted"}
+                ? "⏳ Pending"
+                : "🗑️ Deleted"}
           </button>
         ))}
       </div>
@@ -142,10 +146,18 @@ export default function History() {
               {/* Care Info */}
               {p.care && (
                 <div className="bg-green-100 p-3 rounded-lg mb-3 text-sm">
-                  <p>💧 <b>Watering:</b> {p.care.watering || "N/A"}</p>
-                  <p>☀️ <b>Sunlight:</b> {p.care.sunlight || "N/A"}</p>
-                  <p>🌡️ <b>Temperature:</b> {p.care.temperature || "N/A"}</p>
-                  <p>🪴 <b>Tips:</b> {p.care.extraTips || "N/A"}</p>
+                  <p>
+                    💧 <b>Watering:</b> {p.care.watering || "N/A"}
+                  </p>
+                  <p>
+                    ☀️ <b>Sunlight:</b> {p.care.sunlight || "N/A"}
+                  </p>
+                  <p>
+                    🌡️ <b>Temperature:</b> {p.care.temperature || "N/A"}
+                  </p>
+                  <p>
+                    🪴 <b>Tips:</b> {p.care.extraTips || "N/A"}
+                  </p>
                 </div>
               )}
 

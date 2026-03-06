@@ -4,9 +4,9 @@ import Navbar from "../../components/Navbar";
 import axios from "axios";
 
 // Use same default API as ProductContext (falls back to localhost:4000)
-const API =
-  import.meta.env.VITE_API_URL ||
-  `http://localhost:${import.meta.env.VITE_API_PORT || 4000}/api`;
+const API = import.meta.env.VITE_BACKEND_HOST_URL
+  ? `${import.meta.env.VITE_BACKEND_HOST_URL}/api`
+  : `http://localhost:${import.meta.env.VITE_API_PORT || 4000}/api`;
 
 function Billing() {
   const location = useLocation();
@@ -21,7 +21,7 @@ function Billing() {
       ? product.images[0]
       : "https://via.placeholder.com/200x150");
   const productCost = Number(
-    product.cost ?? product.amount ?? product.price ?? 0
+    product.cost ?? product.amount ?? product.price ?? 0,
   );
 
   const [quantity, setQuantity] = useState(1);
@@ -131,7 +131,7 @@ function Billing() {
             } catch (verErr) {
               console.error("verification failed", verErr);
               alert(
-                "Payment succeeded but verification failed. Contact support."
+                "Payment succeeded but verification failed. Contact support.",
               );
             }
           },
@@ -155,7 +155,7 @@ function Billing() {
       // Network/backend error -> fallback: save order locally and treat as purchased
       console.warn(
         "Payment endpoint unreachable, using offline fallback:",
-        err?.message || err
+        err?.message || err,
       );
       saveOrderLocal(orderPayload);
       setStatus("Backend unreachable — order saved locally. Redirecting...");

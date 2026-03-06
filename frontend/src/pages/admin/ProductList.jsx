@@ -14,7 +14,9 @@ export default function AdminProductList() {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const res = await axios.get("http://localhost:5000/api/products");
+        const res = await axios.get(
+          `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/products`,
+        );
         setProducts(Array.isArray(res.data) ? res.data : []);
       } catch (err) {
         console.error("Error fetching products:", err);
@@ -27,22 +29,52 @@ export default function AdminProductList() {
   }, []);
 
   const renderProductImage = (img) => {
-    if (!img) return <img src={fallbackImg} alt="No Image" className="w-full h-48 object-cover rounded-lg" />;
+    if (!img)
+      return (
+        <img
+          src={fallbackImg}
+          alt="No Image"
+          className="w-full h-48 object-cover rounded-lg"
+        />
+      );
     try {
-      if (img instanceof Blob) return <img src={URL.createObjectURL(img)} alt="Product" className="w-full h-48 object-cover rounded-lg" />;
-      return <img src={img} alt="Product" onError={(e) => (e.target.src = fallbackImg)} className="w-full h-48 object-cover rounded-lg" />;
+      if (img instanceof Blob)
+        return (
+          <img
+            src={URL.createObjectURL(img)}
+            alt="Product"
+            className="w-full h-48 object-cover rounded-lg"
+          />
+        );
+      return (
+        <img
+          src={img}
+          alt="Product"
+          onError={(e) => (e.target.src = fallbackImg)}
+          className="w-full h-48 object-cover rounded-lg"
+        />
+      );
     } catch {
-      return <img src={fallbackImg} alt="No Image" className="w-full h-48 object-cover rounded-lg" />;
+      return (
+        <img
+          src={fallbackImg}
+          alt="No Image"
+          className="w-full h-48 object-cover rounded-lg"
+        />
+      );
     }
   };
 
-  if (loading) return <p className="text-center text-gray-500 mt-10">Loading products...</p>;
+  if (loading)
+    return (
+      <p className="text-center text-gray-500 mt-10">Loading products...</p>
+    );
   if (error) return <p className="text-center text-red-500 mt-10">{error}</p>;
 
   return (
     <div className="p-4 sm:p-6 max-w-7xl mx-auto">
       <h2 className="text-3xl font-bold text-center text-green-500 mb-6">
-         Product List
+        Product List
       </h2>
 
       {products.length === 0 ? (
@@ -55,16 +87,38 @@ export default function AdminProductList() {
               className="bg-gradient-to-br from-green-50 via-lime-50 to-emerald-50 rounded-2xl shadow-md hover:shadow-lg transition p-4 flex flex-col"
             >
               {/* Image */}
-              <div className="mb-3">{renderProductImage(product.images?.[0])}</div>
+              <div className="mb-3">
+                {renderProductImage(product.images?.[0])}
+              </div>
 
               {/* Product Info */}
-              <h3 className="text-lg font-semibold text-green-800 mb-1 truncate">{product.name}</h3>
-              <p className="text-sm text-gray-700 mb-1">Category: {product.category || "N/A"}</p>
-              <p className="text-sm text-gray-700 mb-1">Quantity: {product.quantity || "N/A"}</p>
-              <p className="text-sm text-gray-700 mb-2">Price: ₹{product.amount || "0"}</p>
-              {product.sellerName && <p className="text-sm text-gray-600 mb-1">Seller: {product.sellerName}</p>}
-              {product.sellerEmail && <p className="text-sm text-gray-600 mb-1">Email: {product.sellerEmail}</p>}
-              {product.sellerContact && <p className="text-sm text-gray-600 mb-1">Contact: {product.sellerContact}</p>}
+              <h3 className="text-lg font-semibold text-green-800 mb-1 truncate">
+                {product.name}
+              </h3>
+              <p className="text-sm text-gray-700 mb-1">
+                Category: {product.category || "N/A"}
+              </p>
+              <p className="text-sm text-gray-700 mb-1">
+                Quantity: {product.quantity || "N/A"}
+              </p>
+              <p className="text-sm text-gray-700 mb-2">
+                Price: ₹{product.amount || "0"}
+              </p>
+              {product.sellerName && (
+                <p className="text-sm text-gray-600 mb-1">
+                  Seller: {product.sellerName}
+                </p>
+              )}
+              {product.sellerEmail && (
+                <p className="text-sm text-gray-600 mb-1">
+                  Email: {product.sellerEmail}
+                </p>
+              )}
+              {product.sellerContact && (
+                <p className="text-sm text-gray-600 mb-1">
+                  Contact: {product.sellerContact}
+                </p>
+              )}
 
               {/* <span
                 className={`px-2 py-1 rounded-full font-semibold text-white text-sm mb-2 ${

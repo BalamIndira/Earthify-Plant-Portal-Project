@@ -11,12 +11,14 @@ export default function AdminFeedback() {
     setLoading(true);
     setError("");
     try {
-      const res = await axios.get("http://localhost:5000/api/messages");
+      const res = await axios.get(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/messages`,
+      );
 
       if (Array.isArray(res.data)) {
         // Sort newest first
         const sorted = res.data.sort(
-          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt),
         );
         setMessages(sorted);
       } else {
@@ -37,7 +39,9 @@ export default function AdminFeedback() {
   // Mark feedback as solved (only for buyer & delivery)
   const markAsSolved = async (id) => {
     try {
-      await axios.put(`http://localhost:5000/api/messages/solve/${id}`);
+      await axios.put(
+        `${import.meta.env.VITE_BACKEND_HOST_URL || "http://localhost:4000"}/api/messages/solve/${id}`,
+      );
       fetchMessages();
     } catch (err) {
       console.error("Mark solved error:", err);
@@ -70,7 +74,9 @@ export default function AdminFeedback() {
             ⏳ Loading feedback...
           </p>
         ) : error ? (
-          <p className="text-center text-red-600 text-lg font-medium">{error}</p>
+          <p className="text-center text-red-600 text-lg font-medium">
+            {error}
+          </p>
         ) : messages.length === 0 ? (
           <p className="text-center text-gray-600 text-lg font-medium">
             No feedback found 🌱
@@ -88,10 +94,14 @@ export default function AdminFeedback() {
               >
                 {/* Header */}
                 <div className="flex justify-between items-center mb-2">
-                  <span className="font-semibold text-gray-800">{getTypeIcon(m.type)}</span>
+                  <span className="font-semibold text-gray-800">
+                    {getTypeIcon(m.type)}
+                  </span>
                   <span
                     className={`font-bold ${
-                      m.status === "pending" ? "text-yellow-700" : "text-green-800"
+                      m.status === "pending"
+                        ? "text-yellow-700"
+                        : "text-green-800"
                     }`}
                   >
                     {m.status?.toUpperCase() || "PENDING"}
@@ -105,29 +115,59 @@ export default function AdminFeedback() {
 
                 {/* Sender / Receiver */}
                 <div className="text-sm text-gray-700 mb-2">
-                  {m.senderName && <p>From: <span className="text-green-800 font-semibold">{m.senderName}</span></p>}
-                  {m.receiverName && <p>To: <span className="text-green-800 font-semibold">{m.receiverName}</span></p>}
+                  {m.senderName && (
+                    <p>
+                      From:{" "}
+                      <span className="text-green-800 font-semibold">
+                        {m.senderName}
+                      </span>
+                    </p>
+                  )}
+                  {m.receiverName && (
+                    <p>
+                      To:{" "}
+                      <span className="text-green-800 font-semibold">
+                        {m.receiverName}
+                      </span>
+                    </p>
+                  )}
                 </div>
 
                 {/* Extra info for each type */}
                 {m.type === "seller" && (
                   <div className="mt-2 p-3 bg-green-50 border border-green-200 rounded-lg">
-                    <p className="text-green-800 font-semibold">Seller Name: {m.sellerName || "N/A"}</p>
-                    <p className="text-green-700">Email: {m.sellerEmail || "N/A"}</p>
-                    <p className="text-green-700">Contact: {m.sellerContact || "N/A"}</p>
+                    <p className="text-green-800 font-semibold">
+                      Seller Name: {m.sellerName || "N/A"}
+                    </p>
+                    <p className="text-green-700">
+                      Email: {m.sellerEmail || "N/A"}
+                    </p>
+                    <p className="text-green-700">
+                      Contact: {m.sellerContact || "N/A"}
+                    </p>
                   </div>
                 )}
                 {m.type === "buyer" && (
                   <div className="mt-2 p-3 bg-blue-50 border border-blue-200 rounded-lg">
-                    <p className="text-blue-800 font-semibold">Buyer Name: {m.buyerName || "N/A"}</p>
-                    <p className="text-blue-700">Email: {m.buyerEmail || "N/A"}</p>
-                    <p className="text-blue-700">Contact: {m.buyerContact || "N/A"}</p>
+                    <p className="text-blue-800 font-semibold">
+                      Buyer Name: {m.buyerName || "N/A"}
+                    </p>
+                    <p className="text-blue-700">
+                      Email: {m.buyerEmail || "N/A"}
+                    </p>
+                    <p className="text-blue-700">
+                      Contact: {m.buyerContact || "N/A"}
+                    </p>
                   </div>
                 )}
                 {m.type === "delivery" && (
                   <div className="mt-2 p-3 bg-orange-50 border border-orange-200 rounded-lg">
-                    <p className="text-orange-800 font-semibold">Delivery Name: {m.deliveryName || "N/A"}</p>
-                    <p className="text-orange-700">Contact: {m.deliveryContact || "N/A"}</p>
+                    <p className="text-orange-800 font-semibold">
+                      Delivery Name: {m.deliveryName || "N/A"}
+                    </p>
+                    <p className="text-orange-700">
+                      Contact: {m.deliveryContact || "N/A"}
+                    </p>
                   </div>
                 )}
 
