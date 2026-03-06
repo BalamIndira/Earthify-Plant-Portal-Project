@@ -83,11 +83,29 @@ let feedbackRoutes, historyRoutes, cartRoutes, paymentRoutes, orderRoutes;
   app.use("/api/orders", orderRoutes);
 
   // MongoDB connect
-  const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/agri_db";
+  const MONGO = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/earthify_db";
   mongoose
-    .connect(MONGO, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB connected"))
-    .catch((e) => console.error("MongoDB connection error:", e.message));
+    .connect(MONGO, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+      maxPoolSize: 10,
+    })
+    .then(() => {
+      console.log("✅ MongoDB connected successfully");
+      console.log(`Connected to: ${MONGO.split("@")[1]?.split("?")[0] || "local db"}`);
+    })
+    .catch((e) => {
+      console.error("❌ MongoDB connection error:", e.message);
+      console.log("⚠️  Retrying connection in 5 seconds...");
+      setTimeout(() => {
+        mongoose.connect(MONGO, {
+          useNewUrlParser: true,
+          useUnifiedTopology: true,
+        }).catch(err => console.error("❌ Retry failed:", err.message));
+      }, 5000);
+    });
 
   // Health check
   app.get("/", (req, res) => res.send("🌱 Plant Store Backend Running..."));
