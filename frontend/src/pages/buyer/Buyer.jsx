@@ -407,8 +407,8 @@ export default function Buyer() {
           }
         }
 
-        /* ===== TABLET STYLES (768px to 1023px) ===== */
-        @media (max-width: 1023px) and (min-width: 769px) {
+        /* ===== TABLET STYLES (641px to 1023px) ===== */
+        @media (max-width: 1023px) and (min-width: 641px) {
           .relative.bg-gradient-to-br {
             width: 100%;
             padding: 0;
@@ -516,8 +516,8 @@ export default function Buyer() {
           }
         }
 
-        /* ===== MOBILE STYLES (480px to 768px) ===== */
-        @media (max-width: 768px) {
+        /* ===== MOBILE STYLES (320px to 640px) ===== */
+        @media (max-width: 640px) {
           .relative.bg-gradient-to-br {
             width: 100%;
             margin: 0;
@@ -664,8 +664,8 @@ export default function Buyer() {
           }
         }
 
-        /* ===== SMALL PHONE STYLES (320px to 480px) ===== */
-        @media (max-width: 480px) {
+        /* ===== SMALL PHONE STYLES (320px to 639px) ===== */
+        @media (max-width: 639px) {
           .relative.bg-gradient-to-br {
             width: 100%;
             overflow-x: hidden;
@@ -834,8 +834,8 @@ export default function Buyer() {
           }
         }
 
-        /* ===== EXTRA SMALL PHONES (320px and below) ===== */
-        @media (max-width: 320px) {
+        /* ===== EXTRA SMALL PHONES (319px and below) ===== */
+        @media (max-width: 319px) {
           .pt-8 {
             padding-top: 0.5rem;
           }
